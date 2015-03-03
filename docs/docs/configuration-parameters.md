@@ -23,7 +23,7 @@ The configuration file should include the following fields:
 ```
 
 
-`masters` is a comma separated list with the IP address and port number for the master(s) in the Mesos cluster. Mesos-DNS will automatically find the leading master at any point in order to retrieve state about running tasks. If there is no leading master or the leading master is not responsive, Mesos-DNS will continue serving DNS requests based on stale information about running tasks. The `masters` field is required. 
+`masters` is a list with the IP address and port number for the master(s) in the Mesos cluster. Mesos-DNS will automatically find the leading master at any point in order to retrieve state about running tasks. If there is no leading master or the leading master is not responsive, Mesos-DNS will continue serving DNS requests based on stale information about running tasks. The `masters` field is required.
 
 `refreshSeconds` is the frequency at which Mesos-DNS updates DNS records based on information retrieved from the Mesos master. The default value is 60 seconds. 
 
@@ -33,7 +33,7 @@ The configuration file should include the following fields:
 
 `port` is the port number that Mesos-DNS monitors for incoming DNS requests from slaves. Requests can be sent over TCP or UDP. We recommend you use port `53` as several applications assume that the DNS server listens to this port. The default value is `53`.
 
-`resolvers` is a comma separated list with the IP addresses of external DNS servers that Mesos-DNS will contact to resolve any DNS requests outside the `domain`. We ***recommend*** that you list the nameservers specified in the `/etc/resolv.conf` on the server Mesos-DNS is running. Alternatively, you can list `8.8.8.8`, which is the [Google public DNS](https://developers.google.com/speed/public-dns/) address. The `resolvers` field is required. 
+`resolvers` is a list with the IP addresses of external DNS servers that Mesos-DNS will contact to resolve any DNS requests outside the `domain`. We ***recommend*** that you list the nameservers specified in the `/etc/resolv.conf` on the server Mesos-DNS is running. Alternatively, you can list `8.8.8.8`, which is the [Google public DNS](https://developers.google.com/speed/public-dns/) address. The `resolvers` field is required.
  
 `timeout` is the timeout threshold, in seconds, for connections and requests to external DNS requests. The default value is 5 seconds. 
 
