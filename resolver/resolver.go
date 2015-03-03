@@ -325,15 +325,19 @@ func (res *Resolver) HandleMesos(w dns.ResponseWriter, r *dns.Msg) {
 
 // Serve starts a dns server for net protocol
 func (res *Resolver) Serve(net string) {
-	server := &dns.Server{
-		Addr:       res.Config.Listener + ":" + strconv.Itoa(res.Config.Port),
-		Net:        net,
-		TsigSecret: nil,
-	}
+	for _, listener := range res.Config.Listeners {
+		server := &dns.Server{
+			Addr:       listener + ":" + strconv.Itoa(res.Config.Port),
+			Net:        net,
+			TsigSecret: nil,
+		}
 
-	err := server.ListenAndServe()
-	if err != nil {
-		logging.Error.Printf("Failed to setup "+net+" server: %s\n", err.Error())
+		go func() {
+			err := server.ListenAndServe()
+			if err != nil {
+				logging.Error.Printf("Failed to setup %s server on %s: %s\n", net, listener, err.Error())
+			}
+		}()
 	}
 }
 

@@ -141,7 +141,7 @@ func TestInsertState(t *testing.T) {
 
 	masters := []string{"144.76.157.37:5050"}
 	rg := RecordGenerator{}
-	rg.InsertState(sj, "mesos", "mesos-dns.mesos.", "127.0.0.1", masters)
+	rg.InsertState(sj, "mesos", "mesos-dns.mesos.", []string{"127.0.0.1"}, masters)
 
 	// ensure we are only collecting running tasks
 	_, ok := rg.SRVs["_poseidon._tcp.marathon-0.6.0.mesos."]

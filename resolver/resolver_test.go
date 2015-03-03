@@ -85,7 +85,7 @@ func fakeDNS(port int) (Resolver, error) {
 		Port:      port,
 		Domain:    "mesos",
 		Resolvers: records.GetLocalDNS(),
-		Listener:  "127.0.0.1",
+		Listeners: []string{"127.0.0.1"},
 		Email:     "root.mesos-dns.mesos.",
 		Mname:     "mesos-dns.mesos.",
 	}
@@ -103,7 +103,7 @@ func fakeDNS(port int) (Resolver, error) {
 
 	masters := []string{"144.76.157.37:5050"}
 	res.rs = records.RecordGenerator{}
-	res.rs.InsertState(sj, "mesos", "mesos-dns.mesos.", "127.0.0.1", masters)
+	res.rs.InsertState(sj, "mesos", "mesos-dns.mesos.", []string{"127.0.0.1"}, masters)
 
 	return res, nil
 }

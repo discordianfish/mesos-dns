@@ -48,7 +48,7 @@ type Config struct {
 	Mname string
 
 	// ListenAddr is the server listener address
-	Listener string
+	Listeners []string
 }
 
 // SetConfig instantiates a Config struct read in from config.json
@@ -61,7 +61,7 @@ func SetConfig(cjson string) (c Config) {
 		Timeout:        5,
 		Email:          "root.mesos-dns.mesos",
 		Resolvers:      []string{"8.8.8.8"},
-		Listener:       "0.0.0.0",
+		Listeners:      []string{"0.0.0.0"},
 	}
 
 	usr, _ := user.Current()
@@ -99,7 +99,7 @@ func SetConfig(cjson string) (c Config) {
 		c.Email = c.Email + "."
 	}
 
-    c.Domain = strings.ToLower(c.Domain)
+	c.Domain = strings.ToLower(c.Domain)
 	c.Mname = "mesos-dns." + c.Domain + "."
 
 	logging.Verbose.Println("Mesos-DNS configuration:")
@@ -109,7 +109,7 @@ func SetConfig(cjson string) (c Config) {
 	logging.Verbose.Println("   - Domain: " + c.Domain)
 	logging.Verbose.Println("   - Port: ", c.Port)
 	logging.Verbose.Println("   - Timeout: ", c.Timeout)
-	logging.Verbose.Println("   - Listener: " + c.Listener)
+	logging.Verbose.Println("   - Listeners: " + strings.Join(c.Listeners, ", "))
 	logging.Verbose.Println("   - Resolvers: " + strings.Join(c.Resolvers, ", "))
 	logging.Verbose.Println("   - Email: " + c.Email)
 	logging.Verbose.Println("   - Mname: " + c.Mname)

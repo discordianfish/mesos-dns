@@ -17,7 +17,7 @@ The configuration file should include the following fields:
   "port": 53,
   "resolvers": ["169.254.169.254"],
   "timeout": 5, 
-  "listener": "10.101.160.16",
+  "listeners": [ "10.101.160.16" ],
   "email": "root.mesos-dns.mesos"
 }
 ```
@@ -37,6 +37,6 @@ The configuration file should include the following fields:
  
 `timeout` is the timeout threshold, in seconds, for connections and requests to external DNS requests. The default value is 5 seconds. 
 
-`listener` is the IP address of Mesos-DNS. In SOA replies, Mesos-DNS identifies hostname `mesos-dns.domain` as the primary nameserver for the domain. It uses this IP address in an A record for `mesos-dns.domain`. The default value is "0.0.0.0", which instructs Mesos-DNS to create an A record for every IP address associated with a network interface on the server that runs the Mesos-DNS process. 
+`listeners` is a list of IP addresses for of Mesos-DNS to listen on. In SOA replies, Mesos-DNS identifies hostname `mesos-dns.domain` as the primary nameserver for the domain. It uses this IP address in an A record for `mesos-dns.domain`. The default value is "0.0.0.0", which instructs Mesos-DNS to create an A record for every IP address associated with a network interface on the server that runs the Mesos-DNS process.
 
 `email` is the email address of the Mesos domain name administrator. It is associated with the SOA record for the Mesos domain. The format is `mailbox-name.domain`, using a `.` instead of `@`. For example, if the email address is `root@mesos-dns.mesos`, the `email` field should be `root.mesos-dns.mesos`. The default value is `root.mesos-dns.mesos`.

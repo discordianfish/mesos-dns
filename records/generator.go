@@ -212,7 +212,7 @@ func (rg *RecordGenerator) ParseState(config Config) {
 		return
 	}
 
-	rg.InsertState(sj, config.Domain, config.Mname, config.Listener, config.Masters)
+	rg.InsertState(sj, config.Domain, config.Mname, config.Listeners, config.Masters)
 }
 
 // cleanName sanitizes invalid characters
@@ -233,7 +233,7 @@ func stripInvalid(tname string) string {
 }
 
 // InsertState transforms a StateJSON into RecordGenerator RRs
-func (rg *RecordGenerator) InsertState(sj StateJSON, domain string, mname string, listener string, masters []string) error {
+func (rg *RecordGenerator) InsertState(sj StateJSON, domain string, mname string, listeners []string, masters []string) error {
 	rg.Slaves = sj.Slaves
 
 	rg.SRVs = make(rrs)
@@ -279,9 +279,10 @@ func (rg *RecordGenerator) InsertState(sj StateJSON, domain string, mname string
 		}
 	}
 
-	rg.listenerRecord(listener, mname)
-	rg.masterRecord(listener, domain, masters)
-
+	for _, listener := range listeners {
+		rg.listenerRecord(listener, mname)
+		rg.masterRecord(listener, domain, masters)
+	}
 	return nil
 }
 
